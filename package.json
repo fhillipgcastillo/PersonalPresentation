@@ -9,5 +9,28 @@
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0"
-  }
+  },
+  "name": "theblog",
+  "description": "This is a starter template for [Learn Next.js](https://nextjs.org/learn).",
+  "version": "1.0.0",
+  "main": "npm dev",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fhillipgcastillo/ReactNextGraphQLTs.git"
+  },
+  "keywords": [
+    "nextjs",
+    "react",
+    "graphql",
+    "blog",
+    "react-query",
+    "apollo"
+  ],
+  "author": "Fhillip G. Castillo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fhillipgcastillo/ReactNextGraphQLTs/issues"
+  },
+  "homepage": "https://github.com/fhillipgcastillo/ReactNextGraphQLTs#readme"
 }
