@@ -5,7 +5,7 @@ import { PostData, getSortedPostsData } from '../lib/posts';
 import Link from 'next/link';
 import Date from '../components/Date';
 import { ReactElement } from 'react';
-import { GetStaticProps } from 'next';
+import { GetStaticProps, GetStaticPropsResult } from 'next';
 
 interface Props {
   allPostsData: PostData[];
@@ -35,7 +35,7 @@ export default function Home({allPostsData}:Props):ReactElement {
   );
 }
 
-export const getStaticProps:GetStaticProps = async (/*{ props, preview, params }*/) => {
+export const getStaticProps:GetStaticProps = async (/*{ props, preview, params }*/):Promise<GetStaticPropsResult<Props>> => {
   const allPostsData:PostData[] = getSortedPostsData();
   return {
     props: {
