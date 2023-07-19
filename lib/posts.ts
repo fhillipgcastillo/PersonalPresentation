@@ -3,13 +3,14 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import { fetcher } from './utils';
 
 const API_URL = 'https://jsonplaceholder.typicode.com';
 const postsDirectory = path.join(process.cwd(), 'posts');
 
 export interface PostResponse {
-  userId: string;
-  id: string;
+  userId: number;
+  id: number;
   title: string;
   body: string;
 };
@@ -25,16 +26,9 @@ export type PostParams = {
 // };
 
 
-export async function getAllPosts(): Promise<PostResponse[]> {
-  const posts = await fetch(`${API_URL}/posts`)
-    .then((res) => res.json())
-    .then((data) => {
-      return data as PostResponse[];
-    });
-
-  // Sort posts by date
-  return posts;
-}
+export const getAllPosts = async (): Promise<PostResponse[]> => (
+  await fetcher(`${API_URL}/posts`)
+);
 
 /**
  * 
@@ -46,13 +40,13 @@ export async function getAllPostIds(): Promise<PostParams[]> {
   return posts.map((p) => {
     return {
       params: {
-        id: p.id,
+        id: `${p.id}`,
       },
     };
   });
 };
 
 
-// export async function getPostData(id: string): Promise<PostResponse> {
-  
-// }
+export async function getPostData(id: string): Promise<PostResponse> {
+  return await fetcher(`${API_URL}/posts/${id}`);
+}

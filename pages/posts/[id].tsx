@@ -1,6 +1,6 @@
 import Date from '../../components/Date';
 import Layout from '../../components/Layout';
-import { PostHtmlData, getAllPostIds, getPostData } from '../../lib/posts';
+import { PostResponse, getAllPostIds, getPostData } from '../../lib/posts';
 import Head from 'next/head';
 
 import utilStyles from '../../styles/utils.module.css';
@@ -15,16 +15,18 @@ export default function Post({ postData }): React.ReactElement {
         <article>
             <h1 className={utilStyles.headingXl}>{postData.title}</h1>
             <div className={utilStyles.lightText}>
-                <Date dateString={postData.date} />
+                <label>{postData.userId}</label>
             </div>
-            <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+            <p>
+                {postData.body}
+            </p>
         </article>
     </Layout>;
 }
 
-export const getStaticPaths:GetStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
     // Return a list of possible value for id
-    const paths = getAllPostIds();
+    const paths = await getAllPostIds();
     return {
         paths,
         fallback: false
@@ -33,8 +35,8 @@ export const getStaticPaths:GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     // Fetch necessary data for the blog post using params.id
-    const postData: PostHtmlData = await getPostData(params?.id as string);
-
+    const postData: PostResponse = await getPostData(params?.id as string);
+    console.log("postData", postData);
     return {
         props: {
             postData,
