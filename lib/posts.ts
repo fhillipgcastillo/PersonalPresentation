@@ -5,8 +5,7 @@ import { remark } from 'remark';
 import html from 'remark-html';
 import { fetcher } from './utils';
 
-const API_URL = 'https://jsonplaceholder.typicode.com';
-const postsDirectory = path.join(process.cwd(), 'posts');
+export const API_URL = 'https://jsonplaceholder.typicode.com';
 
 export interface PostResponse {
   userId: number;

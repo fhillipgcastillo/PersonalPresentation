@@ -1,13 +1,14 @@
 import Date from '../../components/Date';
 import Layout from '../../components/Layout';
-import { PostResponse, getAllPostIds, getPostData } from '../../lib/posts';
+import { API_URL, PostResponse, getAllPostIds, getPostData } from '../../lib/posts';
 import Head from 'next/head';
 
 import utilStyles from '../../styles/utils.module.css';
 import React from 'react';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
+import { fetcher } from '../../lib/utils';
 
-export default function Post({ postData }): React.ReactElement {
+export default function Post({ postData, user }): React.ReactElement {
     return <Layout>
         <Head>
             <title>{postData.title}</title>
@@ -15,7 +16,7 @@ export default function Post({ postData }): React.ReactElement {
         <article>
             <h1 className={utilStyles.headingXl}>{postData.title}</h1>
             <div className={utilStyles.lightText}>
-                <label>{postData.userId}</label>
+                <label>By {user.name}</label>
             </div>
             <p>
                 {postData.body}
@@ -36,10 +37,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     // Fetch necessary data for the blog post using params.id
     const postData: PostResponse = await getPostData(params?.id as string);
-    console.log("postData", postData);
+    const user = await fetcher(`${API_URL}/users/${postData.userId}`);
+
     return {
         props: {
             postData,
+            user,
         }
     }
 }
