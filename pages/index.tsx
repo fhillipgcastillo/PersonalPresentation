@@ -1,11 +1,17 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/Layout';
 import utilStyles from '../styles/utils.module.css';
-import { getSortedPostsData } from '../lib/posts';
+import { PostData, getSortedPostsData } from '../lib/posts';
 import Link from 'next/link';
 import Date from '../components/Date';
+import { ReactElement } from 'react';
+import { GetStaticProps } from 'next';
 
-export default function Home({allPostsData}) {
+interface Props {
+  allPostsData: PostData[];
+}
+
+export default function Home({allPostsData}:Props):ReactElement {
   return (
     <Layout home>
       <Head>
@@ -29,8 +35,8 @@ export default function Home({allPostsData}) {
   );
 }
 
-export async function getStaticProps(){
-  const allPostsData = getSortedPostsData();
+export const getStaticProps:GetStaticProps = async (/*{ props, preview, params }*/) => {
+  const allPostsData:PostData[] = getSortedPostsData();
   return {
     props: {
       allPostsData
