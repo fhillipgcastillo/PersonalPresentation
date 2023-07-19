@@ -24,9 +24,6 @@ export default function Home({ posts }: Props): ReactElement {
               <li className={utilStyles.listItem} key={id}>
                 <Link href={`/posts/${id}`}>{title}</Link>
                 <br />
-                <small className={utilStyles.lightText}>
-                  User:
-                </small>
               </li>
             ))}
         </ul>

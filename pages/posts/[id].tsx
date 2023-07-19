@@ -7,6 +7,7 @@ import utilStyles from '../../styles/utils.module.css';
 import React from 'react';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
 import { fetcher } from '../../lib/utils';
+import { getUserById } from '../../lib/users';
 
 export default function Post({ postData, user }): React.ReactElement {
     return <Layout>
@@ -37,7 +38,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     // Fetch necessary data for the blog post using params.id
     const postData: PostResponse = await getPostData(params?.id as string);
-    const user = await fetcher(`${API_URL}/users/${postData.userId}`);
+    const user = await getUserById(`${postData.userId}`);
 
     return {
         props: {
