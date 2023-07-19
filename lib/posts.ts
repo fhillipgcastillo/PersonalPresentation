@@ -7,10 +7,16 @@ import html from 'remark-html';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
-export function getSortedPostsData() {
+interface PostData {
+  id: string;
+  title: string;
+  date: string;
+};
+
+export function getSortedPostsData(): PostData[] {
   // Get file names under /posts
-  const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames.map((fileName) => {
+  const fileNames: string[] = fs.readdirSync(postsDirectory);
+  const allPostsData: PostData[] = fileNames.map((fileName) => {
     // Remove ".md" from file name to get id
     const id = fileName.replace(/\.md$/, '');
 
@@ -19,12 +25,12 @@ export function getSortedPostsData() {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     // Use gray-matter to parse the post metadata section
-    const matterResult = matter(fileContents);
+    const matterResult: matter.GrayMatterFile<string> = matter(fileContents);
 
     // Combine the data with the id
     return {
       id,
-      ...matterResult.data,
+      ...(matterResult.data as { date: string; title: string; }),
     };
   });
   // Sort posts by date
@@ -37,23 +43,33 @@ export function getSortedPostsData() {
   });
 }
 
+
+type PostParams = {
+  params: {
+    id: string;
+  }
+};
 /**
  * 
  * @returns Array({params: {id: string}});
  */
-export function getAllPostIds() {
-    const fileNames = fs.readdirSync(postsDirectory);
+export function getAllPostIds(): PostParams[] {
+  const fileNames = fs.readdirSync(postsDirectory);
 
-    return fileNames.map((fileName) => {
-        return {
-          params: {
-            id: fileName.replace(/\.md$/, ''),
-          },
-        };
-      });
+  return fileNames.map((fileName) => {
+    return {
+      params: {
+        id: fileName.replace(/\.md$/, ''),
+      },
+    };
+  });
 };
 
-export async function  getPostData(id) {
+interface PostHtmlData extends PostData {
+  contentHtml: string;
+}
+
+export async function getPostData(id: string): Promise<PostHtmlData> {
   const fullPath = path.join(postsDirectory, `${id}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
 
@@ -71,5 +87,5 @@ export async function  getPostData(id) {
     id,
     contentHtml,
     ...matterResult.data,
-  };
+  } as PostHtmlData;
 }
