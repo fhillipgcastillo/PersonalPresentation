@@ -6,3 +6,4 @@ We're going to use https://jsonplaceholder.ir/ as server example.
 
   - First, We're going to use the normal rest post API.
   - Second, We're going to use the GraphQL API.
+  - A nice to have:an implemention of users section to show all users and see posts by that user.
