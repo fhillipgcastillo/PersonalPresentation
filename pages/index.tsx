@@ -46,7 +46,7 @@ export const getStaticProps:GetStaticProps = async (/*{ props, preview, params }
 
 /**
  * This is an example if we want to use serside rendering
- * export async function getServerSideProps(context) {
+ * export const getServerSideProps: GetServerSideProps = async (context){
     return {
       props: {
         // props for your component
