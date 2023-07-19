@@ -35,3 +35,14 @@ export async function getStaticProps(){
     }
   }
 }
+
+/**
+ * This is an example if we want to use serside rendering
+ * export async function getServerSideProps(context) {
+    return {
+      props: {
+        // props for your component
+      },
+    };
+  }
+ */
