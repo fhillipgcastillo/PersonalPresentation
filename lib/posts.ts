@@ -7,11 +7,22 @@ import html from 'remark-html';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
-interface PostData {
+export interface PostData {
   id: string;
   title: string;
   date: string;
 };
+
+export type PostParams = {
+  params: {
+    id: string;
+  }
+};
+
+export interface PostHtmlData extends PostData {
+  contentHtml: string;
+};
+
 
 export function getSortedPostsData(): PostData[] {
   // Get file names under /posts
@@ -43,12 +54,6 @@ export function getSortedPostsData(): PostData[] {
   });
 }
 
-
-type PostParams = {
-  params: {
-    id: string;
-  }
-};
 /**
  * 
  * @returns Array({params: {id: string}});
@@ -65,9 +70,6 @@ export function getAllPostIds(): PostParams[] {
   });
 };
 
-interface PostHtmlData extends PostData {
-  contentHtml: string;
-}
 
 export async function getPostData(id: string): Promise<PostHtmlData> {
   const fullPath = path.join(postsDirectory, `${id}.md`);
