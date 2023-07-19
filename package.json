@@ -35,5 +35,10 @@
   "bugs": {
     "url": "https://github.com/fhillipgcastillo/ReactNextGraphQLTs/issues"
   },
-  "homepage": "https://github.com/fhillipgcastillo/ReactNextGraphQLTs#readme"
+  "homepage": "https://github.com/fhillipgcastillo/ReactNextGraphQLTs#readme",
+  "devDependencies": {
+    "@types/node": "20.4.2",
+    "@types/react": "18.2.15",
+    "typescript": "5.1.6"
+  }
 }
