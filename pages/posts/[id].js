@@ -1,9 +1,12 @@
 import Layout from '../../components/layout';
 import { getAllPostIds, getPostData } from '../../lib/posts';
-
+import Head from 'next/head';
 
 export default function Post({ postData }) {
     return <Layout>
+        <Head>
+            <title>{postData.title}</title>
+        </Head>
         <h2>{postData.title}</h2>
         <br />
         <strong>{postData.id}</strong>
