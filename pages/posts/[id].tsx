@@ -35,7 +35,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params, preview }) => {
     // Fetch necessary data for the blog post using params.id
     const postData: PostResponse = await getPostData(params?.id as string);
     const user = await getUserById(`${postData.userId}`);
