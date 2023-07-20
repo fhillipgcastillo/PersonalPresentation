@@ -1,11 +1,11 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/Layout';
 import utilStyles from '../styles/utils.module.css';
-import { PostResponse, getAllPosts } from '../lib/posts';
+import { PostResponse } from '../lib/posts';
 import Link from 'next/link';
-import { ReactElement, ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import { GetStaticProps, GetStaticPropsResult } from 'next';
-import { useQuery, gql, useApolloClient } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { client } from '../lib/apolloClient';
 
 
