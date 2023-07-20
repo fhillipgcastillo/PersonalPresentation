@@ -6,22 +6,26 @@ import Link from 'next/link';
 import { ReactElement, ReactNode, useEffect } from 'react';
 import { GetStaticProps, GetStaticPropsResult } from 'next';
 import { useQuery, gql, useApolloClient } from '@apollo/client';
+import { client } from '../lib/apolloClient';
+
+
+const GET_ALL_POSTS_QUERY = gql`
+query getPosts {
+  posts {
+    data {
+      id
+      title
+      body
+    }
+  }
+ }
+`;
+
 interface Props {
   posts: PostResponse[];
 }
 
-export default function Home(): ReactNode {
-  const { data, loading, error } = useQuery(gql`
-  query getPosts {
-    posts {
-      data {
-        id
-        title
-        body
-      }
-    }
-   }
-  `);
+export default function Home({ posts }): ReactNode {
 
   return (
     <Layout home>
@@ -31,9 +35,7 @@ export default function Home(): ReactNode {
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
-          {loading && <li>Loading...</li>}
-          {error && <li><p><label>{error.name}:</label>{error.message}</p></li>}
-          {!loading && !error && data && data.posts.data.map(({ id, title }) => (
+          {posts.map(({ id, title }) => (
             <li className={utilStyles.listItem} key={id}>
               <Link href={`/posts/${id}`}>{title}</Link>
               <br />
@@ -45,17 +47,15 @@ export default function Home(): ReactNode {
   );
 }
 
-// export const getStaticProps: GetStaticProps = async ({ preview, params }): Promise<GetStaticPropsResult<Props>> => {
-//   const posts: PostResponse[] = await getAllPosts();
-//   // const apolloClient = await useApolloClient();
-//   // console.log("apolloclient", apolloClient);
-//   console.log({ preview, params })
-//   return {
-//     props: {
-//       posts
-//     }
-//   }
-// }
+export const getStaticProps: GetStaticProps = async ({ preview, params }): Promise<GetStaticPropsResult<Props>> => {
+  const { data } = await client.query({ query: GET_ALL_POSTS_QUERY });
+
+  return {
+    props: {
+      posts: data.posts.data,
+    }
+  }
+}
 
 /**
  * This is an example if we want to use serside rendering
