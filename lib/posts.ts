@@ -4,6 +4,9 @@ import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
 import { fetcher } from './utils';
+import { client } from './apolloClient';
+import {gql} from '@apollo/client';
+import { GET_ALL_POSTS_QUERY, GET_POST_BY_ID_QUERY, GET_POST_IDS_QUERY } from './graphqlQuery';
 
 export const API_URL = 'https://jsonplaceholder.typicode.com';
 
@@ -24,28 +27,30 @@ export type PostParams = {
 //   contentHtml: string;
 // };
 
-
-export const getAllPosts = async (): Promise<PostResponse[]> => (
-  await fetcher(`${API_URL}/posts`)
-);
+export const getAllPosts = async () => {
+  const { data } = await client.query({ query: GET_ALL_POSTS_QUERY });
+  return data.posts.data;
+};
 
 /**
  * 
  * @returns Array({params: {id: string}});
  */
-export async function getAllPostIds(): Promise<PostParams[]> {
-  const posts = await getAllPosts();
+export async function getAllPostIdsPaths(): Promise<PostParams[]> {
+  const { data } = await client.query({ query: GET_POST_IDS_QUERY });
 
-  return posts.map((p) => {
+  return data.posts.data.map((post) => {
     return {
       params: {
-        id: `${p.id}`,
+        id: post.id.toString(),
       },
     };
   });
 };
 
 
-export async function getPostData(id: string): Promise<PostResponse> {
-  return await fetcher(`${API_URL}/posts/${id}`);
+export async function getPostData(id: number)/*: Promise<PostHtmlData>: Promise<PostResponse>*/ {
+  const { data } = await client.query({ query: GET_POST_BY_ID_QUERY, variables: { postId: id } });
+
+  return data.post;
 }

@@ -1,6 +1,6 @@
 import Date from '../../components/Date';
 import Layout from '../../components/Layout';
-import { API_URL, PostResponse, getAllPostIds, getPostData } from '../../lib/posts';
+import { API_URL, PostResponse, getAllPostIdsPaths, getPostData } from '../../lib/posts';
 import Head from 'next/head';
 
 import utilStyles from '../../styles/utils.module.css';
@@ -9,7 +9,7 @@ import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
 import { fetcher } from '../../lib/utils';
 import { getUserById } from '../../lib/users';
 
-export default function Post({ postData, user }): React.ReactElement {
+export default function Post({ postData }): React.ReactElement {
     return <Layout>
         <Head>
             <title>{postData.title}</title>
@@ -17,7 +17,7 @@ export default function Post({ postData, user }): React.ReactElement {
         <article>
             <h1 className={utilStyles.headingXl}>{postData.title}</h1>
             <div className={utilStyles.lightText}>
-                <label>By {user.name}</label>
+                <label>By {postData?.user?.name}</label>
             </div>
             <p>
                 {postData.body}
@@ -28,7 +28,8 @@ export default function Post({ postData, user }): React.ReactElement {
 
 export const getStaticPaths: GetStaticPaths = async () => {
     // Return a list of possible value for id
-    const paths = await getAllPostIds();
+    const paths = await getAllPostIdsPaths();
+
     return {
         paths,
         fallback: false
@@ -36,14 +37,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, preview }) => {
-    // Fetch necessary data for the blog post using params.id
-    const postData: PostResponse = await getPostData(params?.id as string);
-    const user = await getUserById(`${postData.userId}`);
-
+    const postData = await getPostData(Number(params?.id));
+    
     return {
         props: {
-            postData,
-            user,
+            postData
         }
     }
 }

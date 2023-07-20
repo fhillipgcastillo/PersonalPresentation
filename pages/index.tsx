@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/Layout';
 import utilStyles from '../styles/utils.module.css';
-import { PostResponse } from '../lib/posts';
+import { PostResponse, getAllPosts } from '../lib/posts';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 import { GetStaticProps, GetStaticPropsResult } from 'next';
@@ -9,17 +9,6 @@ import { gql } from '@apollo/client';
 import { client } from '../lib/apolloClient';
 
 
-const GET_ALL_POSTS_QUERY = gql`
-query getPosts {
-  posts {
-    data {
-      id
-      title
-      body
-    }
-  }
- }
-`;
 
 interface Props {
   posts: PostResponse[];
@@ -48,11 +37,11 @@ export default function Home({ posts }): ReactNode {
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview, params }): Promise<GetStaticPropsResult<Props>> => {
-  const { data } = await client.query({ query: GET_ALL_POSTS_QUERY });
+  const posts = await getAllPosts();
 
   return {
     props: {
-      posts: data.posts.data,
+      posts,
     }
   }
 }
