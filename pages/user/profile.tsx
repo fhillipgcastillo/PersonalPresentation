@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import Image from "next/image"
 
-const Profile = () => {
+const Profile = ():ReactElement => {
   return (
     <div>
         <Image

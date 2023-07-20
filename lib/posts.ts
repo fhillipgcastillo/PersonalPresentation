@@ -3,14 +3,18 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import { fetcher } from './utils';
+import { client } from './apolloClient';
+import {gql} from '@apollo/client';
+import { GET_ALL_POSTS_QUERY, GET_POST_BY_ID_QUERY, GET_POST_IDS_QUERY } from './graphqlQuery';
 
+export const API_URL = 'https://jsonplaceholder.typicode.com';
 
-const postsDirectory = path.join(process.cwd(), 'posts');
-
-export interface PostData {
-  id: string;
+export interface PostResponse {
+  userId: number;
+  id: number;
   title: string;
-  date: string;
+  body: string;
 };
 
 export type PostParams = {
@@ -19,75 +23,34 @@ export type PostParams = {
   }
 };
 
-export interface PostHtmlData extends PostData {
-  contentHtml: string;
+// export interface PostHtmlData extends PostData {
+//   contentHtml: string;
+// };
+
+export const getAllPosts = async () => {
+  const { data } = await client.query({ query: GET_ALL_POSTS_QUERY });
+  return data.posts.data;
 };
-
-
-export function getSortedPostsData(): PostData[] {
-  // Get file names under /posts
-  const fileNames: string[] = fs.readdirSync(postsDirectory);
-  const allPostsData: PostData[] = fileNames.map((fileName) => {
-    // Remove ".md" from file name to get id
-    const id = fileName.replace(/\.md$/, '');
-
-    // Read markdown file as string
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-
-    // Use gray-matter to parse the post metadata section
-    const matterResult: matter.GrayMatterFile<string> = matter(fileContents);
-
-    // Combine the data with the id
-    return {
-      id,
-      ...(matterResult.data as { date: string; title: string; }),
-    };
-  });
-  // Sort posts by date
-  return allPostsData.sort((a, b) => {
-    if (a.date < b.date) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
-}
 
 /**
  * 
  * @returns Array({params: {id: string}});
  */
-export function getAllPostIds(): PostParams[] {
-  const fileNames = fs.readdirSync(postsDirectory);
+export async function getAllPostIdsPaths(): Promise<PostParams[]> {
+  const { data } = await client.query({ query: GET_POST_IDS_QUERY });
 
-  return fileNames.map((fileName) => {
+  return data.posts.data.map((post) => {
     return {
       params: {
-        id: fileName.replace(/\.md$/, ''),
+        id: post.id.toString(),
       },
     };
   });
 };
 
 
-export async function getPostData(id: string): Promise<PostHtmlData> {
-  const fullPath = path.join(postsDirectory, `${id}.md`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
+export async function getPostData(id: number)/*: Promise<PostHtmlData>: Promise<PostResponse>*/ {
+  const { data } = await client.query({ query: GET_POST_BY_ID_QUERY, variables: { postId: id } });
 
-  // Use gray-matter to parse the post metadata section
-  const matterResult = matter(fileContents);
-
-  // Use remark to convert markdown into HTML string
-  const processedContent = await remark()
-    .use(html)
-    .process(matterResult.content);
-  const contentHtml = processedContent.toString();
-
-  // Combine the data with the id and contentHtml
-  return {
-    id,
-    contentHtml,
-    ...matterResult.data,
-  } as PostHtmlData;
+  return data.post;
 }

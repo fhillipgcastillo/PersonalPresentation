@@ -1,17 +1,21 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/Layout';
 import utilStyles from '../styles/utils.module.css';
-import { PostData, getSortedPostsData } from '../lib/posts';
+import { PostResponse, getAllPosts } from '../lib/posts';
 import Link from 'next/link';
-import Date from '../components/Date';
-import { ReactElement } from 'react';
+import { ReactNode } from 'react';
 import { GetStaticProps, GetStaticPropsResult } from 'next';
+import { gql } from '@apollo/client';
+import { client } from '../lib/apolloClient';
+
+
 
 interface Props {
-  allPostsData: PostData[];
+  posts: PostResponse[];
 }
 
-export default function Home({allPostsData}:Props):ReactElement {
+export default function Home({ posts }): ReactNode {
+
   return (
     <Layout home>
       <Head>
@@ -20,14 +24,11 @@ export default function Home({allPostsData}:Props):ReactElement {
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title }) => (
+          {posts.map(({ id, title }) => (
             <li className={utilStyles.listItem} key={id}>
-            <Link href={`/posts/${id}`}>{title}</Link>
-            <br />
-            <small className={utilStyles.lightText}>
-              <Date dateString={date} />
-            </small>
-          </li>
+              <Link href={`/posts/${id}`}>{title}</Link>
+              <br />
+            </li>
           ))}
         </ul>
       </section>
@@ -35,11 +36,12 @@ export default function Home({allPostsData}:Props):ReactElement {
   );
 }
 
-export const getStaticProps:GetStaticProps = async (/*{ props, preview, params }*/):Promise<GetStaticPropsResult<Props>> => {
-  const allPostsData:PostData[] = getSortedPostsData();
+export const getStaticProps: GetStaticProps = async ({ preview, params }): Promise<GetStaticPropsResult<Props>> => {
+  const posts = await getAllPosts();
+
   return {
     props: {
-      allPostsData
+      posts,
     }
   }
 }
