@@ -6,7 +6,9 @@
     "start": "next start"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.17",
     "date-fns": "^2.30.0",
+    "graphql": "^16.7.1",
     "gray-matter": "^4.0.3",
     "next": "latest",
     "react": "18.2.0",

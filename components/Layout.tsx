@@ -10,7 +10,7 @@ export const siteTitle: string = 'Next.js Sample Website';
 
 export default function Layout(
   { children, home }: { children: React.ReactNode, home?: boolean }
-) {
+): React.ReactNode {
   return (
     <div className={styles.container}>
       <Head>
