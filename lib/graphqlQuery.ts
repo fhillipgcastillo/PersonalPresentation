@@ -35,3 +35,33 @@ export const GET_POST_BY_ID_QUERY = gql`
         }
     }
 `;
+
+export const GET_POST_FULL_QUERY = gql`
+    query getExtensivePost {
+        post (id: 1) {
+            id
+            title
+            user {
+                id
+                name
+                posts {
+                    data {
+                        id
+                        title
+                    }
+                }
+            }
+            comments {
+                data {
+                    id
+                    name
+                    email
+                    body
+                    post {
+                        id
+                    }
+                }
+            }
+        }
+    }
+`;
