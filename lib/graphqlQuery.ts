@@ -57,9 +57,6 @@ export const GET_POST_FULL_QUERY = gql`
                     name
                     email
                     body
-                    post {
-                        id
-                    }
                 }
             }
         }
