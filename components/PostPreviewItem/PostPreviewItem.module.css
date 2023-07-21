@@ -1,0 +1,38 @@
+
+.postPreviewContainer {
+    display: flex;
+    padding: 1rem;
+    font-size: large;
+    background-color: white;
+    flex-direction: column;
+    align-items: center;
+    color: #535760;
+    margin: 1rem;
+    box-shadow: #1d273d17 0px 0px 6px 3px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    font-weight: 400;
+    height: 100%;
+    justify-content: space-between;
+}
+.postPreviewContainer a:hover {
+    text-decoration: none;
+}
+.read-more {
+    text-align: center;
+    background-color: #3b455e;
+    padding: 7.5px 15px;
+    color: white;
+    border: none;
+}
+.read-more:hover {
+    background-color: #41568c;
+}
+.read-more > a {
+    color: white;
+    text-decoration: none;
+}
+
+.title {
+    margin-top: 0.3em;
+}

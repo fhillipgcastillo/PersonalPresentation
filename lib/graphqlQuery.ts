@@ -7,6 +7,10 @@ query getPosts {
       id
       title
       body
+      user {
+        id
+        name
+      }
     }
   }
  }
