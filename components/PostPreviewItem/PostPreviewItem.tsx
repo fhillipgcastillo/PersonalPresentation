@@ -6,13 +6,13 @@ import React from "react";
 
 const PostPreviewItem = ({ post }): React.ReactNode => {
     return (
-        <Link href={`/posts/${post.id}`}>
-            <div className={postsStyles.postPreviewContainer}>
+        <div className={postsStyles.postPreviewContainer}>
+            <Link href={`/posts/${post.id}`}>
                 <label>{post?.user.name.toUpperCase()}</label>
                 <h3 className={postsStyles.title}>{post.title}</h3>
                 <button className={postsStyles["read-more"]}><Link href={`/posts/${post.id}`}>READ MORE</Link></button>
-            </div>
-        </Link>
+            </Link>
+        </div>
     );
 };
 
