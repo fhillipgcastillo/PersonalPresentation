@@ -36,3 +36,12 @@
 .title {
     margin-top: 0.3em;
 }
+
+
+.commentItem {
+    list-style: none;
+}
+
+.commentUser {
+    font-weight: 600;
+}
