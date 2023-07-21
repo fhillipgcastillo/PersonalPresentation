@@ -1,19 +1,22 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/Layout';
 import utilStyles from '../styles/utils.module.css';
-import { PostResponse, getAllPosts } from '../lib/posts';
+import { PostResponse, getAllPosts, getPostsPaginated } from '../lib/posts';
 import { ReactNode } from 'react';
 import { GetStaticProps, GetStaticPropsResult } from 'next';
 import { PostPreviewItem } from '../components/PostPreviewItem';
+import { PostsPaginated } from '../lib/graphqlQuery';
 
 
 interface Props {
-  posts: PostResponse[];
+  postsData: PostsPaginated;
 }
 
 
 
-export default function Home({ posts }): ReactNode {
+export default function Home({ postsData }: Props): ReactNode {
+  console.log(postsData);
+  // return <>loadging</>
   return (
     <Layout home>
       <Head>
@@ -21,7 +24,7 @@ export default function Home({ posts }): ReactNode {
       </Head>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <ul className={utilStyles.list}>
-          {posts.map((post) =>
+          {postsData.data.map((post) =>
           <li className={utilStyles.listItem} key={post.id} >
             <PostPreviewItem post={post} key={post.id}/>
           </li>
@@ -33,11 +36,12 @@ export default function Home({ posts }): ReactNode {
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview, params }): Promise<GetStaticPropsResult<Props>> => {
-  const posts = await getAllPosts();
-
+  // const {page, limit} = params;
+  // console.log('params', params);
+  const data: { posts: PostsPaginated} = await getPostsPaginated();
   return {
     props: {
-      posts,
+      postsData: data.posts,
     }
   }
 }

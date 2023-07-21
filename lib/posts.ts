@@ -5,8 +5,8 @@ import { remark } from 'remark';
 import html from 'remark-html';
 import { fetcher } from './utils';
 import { client } from './apolloClient';
-import {gql} from '@apollo/client';
-import { GET_ALL_POSTS_QUERY, GET_POST_BY_ID_QUERY, GET_POST_FULL_QUERY, GET_POST_IDS_QUERY } from './graphqlQuery';
+import { gql } from '@apollo/client';
+import { GET_ALL_POSTS_QUERY, GET_POSTS_PAGINATED_QUERY, GET_POST_BY_ID_QUERY, GET_POST_FULL_QUERY, GET_POST_IDS_QUERY } from './graphqlQuery';
 
 export const API_URL = 'https://jsonplaceholder.typicode.com';
 
@@ -30,6 +30,15 @@ export type PostParams = {
 export const getAllPosts = async () => {
   const { data } = await client.query({ query: GET_ALL_POSTS_QUERY });
   return data.posts.data;
+};
+
+export const getPostsPaginated = async (page: number = 1, limit: number = 10) => {
+  const { data } = await client.query(
+    { query: GET_POSTS_PAGINATED_QUERY ,
+      variables: { paginate: { page, limit } }
+    }
+  );
+  return data;
 };
 
 /**

@@ -1,4 +1,4 @@
-import {gql} from '@apollo/client';
+import { gql } from '@apollo/client';
 
 export const GET_ALL_POSTS_QUERY = gql`
 query getPosts {
@@ -14,6 +14,78 @@ query getPosts {
     }
   }
  }
+`;
+
+
+export interface PostsPaginated {
+    data: {
+        id: number;
+        title: string;
+        body: string;
+        user: {
+            id: number;
+            name: string;
+        }
+    }[];
+    meta: {
+        totalCount: number;
+    };
+    links: {
+        first: {
+            page: number;
+            limit: number;
+        };
+        prev: {
+            page: number;
+            limit: number;
+        };
+        next: {
+            page: number;
+            limit: number;
+        };
+        last: {
+            page: number;
+            limit: number;
+        }
+    }
+};
+
+export const GET_POSTS_PAGINATED_QUERY = gql`
+query getPostsPaginated 
+{
+  posts(options:{paginate:{ page:1, limit:10 }}) {
+    data {
+      id
+      title
+      body
+      user {
+        id
+        name
+      }
+    }
+    meta {
+      totalCount
+    }
+    links {
+      first {
+        page
+        limit
+      }
+      prev {
+        page
+        limit
+      }
+      next {
+        page
+        limit
+      }
+      last {
+        page
+        limit
+      }
+    }
+  }
+}
 `;
 
 export const GET_POST_IDS_QUERY = gql`
