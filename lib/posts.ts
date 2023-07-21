@@ -6,7 +6,7 @@ import html from 'remark-html';
 import { fetcher } from './utils';
 import { client } from './apolloClient';
 import {gql} from '@apollo/client';
-import { GET_ALL_POSTS_QUERY, GET_POST_BY_ID_QUERY, GET_POST_IDS_QUERY } from './graphqlQuery';
+import { GET_ALL_POSTS_QUERY, GET_POST_BY_ID_QUERY, GET_POST_FULL_QUERY, GET_POST_IDS_QUERY } from './graphqlQuery';
 
 export const API_URL = 'https://jsonplaceholder.typicode.com';
 
@@ -51,6 +51,13 @@ export async function getAllPostIdsPaths(): Promise<PostParams[]> {
 
 export async function getPostData(id: number)/*: Promise<PostHtmlData>: Promise<PostResponse>*/ {
   const { data } = await client.query({ query: GET_POST_BY_ID_QUERY, variables: { postId: id } });
+
+  return data.post;
+}
+
+
+export async function getFullPostData(id: number)/*: Promise<PostHtmlData>: Promise<PostResponse>*/ {
+  const { data } = await client.query({ query: GET_POST_FULL_QUERY, variables: { postId: id } });
 
   return data.post;
 }

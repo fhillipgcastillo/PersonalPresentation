@@ -41,10 +41,15 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: space-around;
   }
   
   .listItem {
     margin: 0 0 1.25rem;
+    flex-basis: 50%;
   }
   
   .lightText {

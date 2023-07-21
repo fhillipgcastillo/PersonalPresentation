@@ -7,6 +7,10 @@ query getPosts {
       id
       title
       body
+      user {
+        id
+        name
+      }
     }
   }
  }
@@ -41,6 +45,7 @@ export const GET_POST_FULL_QUERY = gql`
         post (id: 1) {
             id
             title
+            body
             user {
                 id
                 name
