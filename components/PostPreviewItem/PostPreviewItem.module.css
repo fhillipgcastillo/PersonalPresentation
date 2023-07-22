@@ -16,6 +16,10 @@
     justify-content: space-between;
 } 
 
+.postPreviewContainer:hover {
+    box-shadow: #6f94e5 0px 0px 10px 3px;
+
+}
 .postPreviewContainer a {
     color: #535760;
 }

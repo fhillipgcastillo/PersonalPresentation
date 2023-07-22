@@ -1,19 +1,21 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/Layout';
 import utilStyles from '../styles/utils.module.css';
-import { PostResponse, getAllPosts } from '../lib/posts';
+import { getPostsPaginated } from '../lib/posts';
 import { ReactNode } from 'react';
 import { GetStaticProps, GetStaticPropsResult } from 'next';
 import { PostPreviewItem } from '../components/PostPreviewItem';
+import { PostsPaginated } from '../lib/graphqlQuery';
+import LinkedButton from '../components/LinkedButton/LinkedButton';
 
 
 interface Props {
-  posts: PostResponse[];
+  postsData: PostsPaginated;
 }
 
 
 
-export default function Home({ posts }): ReactNode {
+export default function Home({ postsData }: Props): ReactNode {
   return (
     <Layout home>
       <Head>
@@ -21,23 +23,30 @@ export default function Home({ posts }): ReactNode {
       </Head>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <ul className={utilStyles.list}>
-          {posts.map((post) =>
-          <li className={utilStyles.listItem} key={post.id} >
-            <PostPreviewItem post={post} key={post.id}/>
-          </li>
+          {postsData.data.map((post) =>
+            <li className={utilStyles.listItem} key={post.id} >
+              <PostPreviewItem post={post} key={post.id} />
+            </li>
           )}
         </ul>
+        <div className='pagination' style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <LinkedButton href="" alt="First page"></LinkedButton>
+          <LinkedButton href="" alt="Previous page"></LinkedButton>
+          <label >Page 1 of {postsData?.meta.totalCount / 10}</label>
+          <LinkedButton href={`/posts/page/${postsData?.links.next?.page || ''}`} alt="Nest page">{postsData?.links.next?.page && "Next →"}</LinkedButton>
+          <LinkedButton href={`/posts/page/${postsData?.links.last?.page || ''}`} alt="Last page">{postsData?.links.last?.page && "Last"}</LinkedButton>
+        </div>
       </section>
     </Layout>
   );
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview, params }): Promise<GetStaticPropsResult<Props>> => {
-  const posts = await getAllPosts();
 
+  const data: { posts: PostsPaginated } = await getPostsPaginated();
   return {
     props: {
-      posts,
+      postsData: data.posts,
     }
   }
 }

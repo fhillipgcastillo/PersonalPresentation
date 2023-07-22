@@ -1,12 +1,5 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { remark } from 'remark';
-import html from 'remark-html';
-import { fetcher } from './utils';
 import { client } from './apolloClient';
-import {gql} from '@apollo/client';
-import { GET_ALL_POSTS_QUERY, GET_POST_BY_ID_QUERY, GET_POST_FULL_QUERY, GET_POST_IDS_QUERY } from './graphqlQuery';
+import { GET_ALL_POSTS_QUERY, GET_POSTS_PAGINATED_PATHS_QUERY, GET_POSTS_PAGINATED_QUERY, GET_POST_BY_ID_QUERY, GET_POST_FULL_QUERY, GET_POST_IDS_QUERY } from './graphqlQuery';
 
 export const API_URL = 'https://jsonplaceholder.typicode.com';
 
@@ -32,6 +25,16 @@ export const getAllPosts = async () => {
   return data.posts.data;
 };
 
+export const getPostsPaginated = async (page: number = 1, limit: number = 10) => {
+  const { data } = await client.query(
+    {
+      query: GET_POSTS_PAGINATED_QUERY,
+      variables: { page, limit }
+    }
+  );
+  return data;
+};
+
 /**
  * 
  * @returns Array({params: {id: string}});
@@ -48,6 +51,16 @@ export async function getAllPostIdsPaths(): Promise<PostParams[]> {
   });
 };
 
+export async function getPostPaginatedIdsPaths(): Promise<{ totalCount: number; }> {
+  const { data } = await client.query({
+    query: GET_POSTS_PAGINATED_PATHS_QUERY,
+    variables: {
+      page: 1,
+      limit: 10,
+    }
+  });
+  return data.posts.meta
+};
 
 export async function getPostData(id: number)/*: Promise<PostHtmlData>: Promise<PostResponse>*/ {
   const { data } = await client.query({ query: GET_POST_BY_ID_QUERY, variables: { postId: id } });
