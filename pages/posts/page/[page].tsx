@@ -20,6 +20,9 @@ export default function PostsPage({ postsData, page }: Props): ReactNode {
             <Head>
                 <title>{siteTitle}</title>
             </Head>
+            <section style={{ display: "flex", justifyContent: "flex-end", padding: "10px" }}>
+                <LinkedButton href="/posts/new" alt="New post" style={{ backgroundColor: "#0070f3", color: "white", padding: "10px 20px", alignSelf: "end" }}>New Post</LinkedButton>
+            </section>
             <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
                 <ul className={utilStyles.list}>
                     {postsData?.data.map((post) =>
@@ -56,7 +59,7 @@ export const getStaticPaths = async () => {
     let paths = [];
     const meta = await getPostPaginatedIdsPaths();
 
-    for (let i = 1; i <= meta?.totalCount/10; i++) {
+    for (let i = 1; i <= meta?.totalCount / 10; i++) {
         paths.push({
             params: {
                 page: i.toString()
