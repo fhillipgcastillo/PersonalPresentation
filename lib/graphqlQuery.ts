@@ -18,7 +18,7 @@ query getPosts {
 
 
 export interface PostsPaginated {
-    data: {
+    data?: {
         id: number;
         title: string;
         body: string;
@@ -27,19 +27,19 @@ export interface PostsPaginated {
             name: string;
         }
     }[];
-    meta: {
+    meta?: {
         totalCount: number;
     };
-    links: {
+    links?: {
         first: {
             page: number;
             limit: number;
         };
-        prev: {
+        prev?: {
             page: number;
             limit: number;
         };
-        next: {
+        next?: {
             page: number;
             limit: number;
         };
@@ -51,41 +51,53 @@ export interface PostsPaginated {
 };
 
 export const GET_POSTS_PAGINATED_QUERY = gql`
-query getPostsPaginated 
+    query getPaginatedPosts($page: Int, $limit: Int){
+        posts(options:{paginate:{ page: $page, limit: $limit }}) {
+            data {
+            id
+            title
+            body
+            user {
+                id
+                name
+            }
+            }
+            meta {
+            totalCount
+            }
+            links {
+            first {
+                page
+                limit
+            }
+            prev {
+                page
+                limit
+            }
+            next {
+                page
+                limit
+            }
+            last {
+                page
+                limit
+            }
+            }
+        }
+    }
+`;
+
+
+export const GET_POSTS_PAGINATED_PATHS_QUERY = gql`
+query getPostsPaginated
 {
-  posts(options:{paginate:{ page:1, limit:10 }}) {
-    data {
-      id
-      title
-      body
-      user {
-        id
-        name
+    posts(options:{paginate:{ page:1, limit:10 }}) {
+      meta {
+        totalCount
       }
-    }
-    meta {
-      totalCount
-    }
-    links {
-      first {
-        page
-        limit
-      }
-      prev {
-        page
-        limit
-      }
-      next {
-        page
-        limit
-      }
-      last {
-        page
-        limit
-      }
+  
     }
   }
-}
 `;
 
 export const GET_POST_IDS_QUERY = gql`

@@ -1,11 +1,12 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/Layout';
 import utilStyles from '../styles/utils.module.css';
-import { PostResponse, getAllPosts, getPostsPaginated } from '../lib/posts';
+import { getPostsPaginated } from '../lib/posts';
 import { ReactNode } from 'react';
 import { GetStaticProps, GetStaticPropsResult } from 'next';
 import { PostPreviewItem } from '../components/PostPreviewItem';
 import { PostsPaginated } from '../lib/graphqlQuery';
+import LinkedButton from '../components/LinkedButton/LinkedButton';
 
 
 interface Props {
@@ -15,8 +16,6 @@ interface Props {
 
 
 export default function Home({ postsData }: Props): ReactNode {
-  console.log(postsData);
-  // return <>loadging</>
   return (
     <Layout home>
       <Head>
@@ -30,14 +29,20 @@ export default function Home({ postsData }: Props): ReactNode {
           </li>
           )}
         </ul>
+        <div className='pagination' style={{display: "flex", justifyContent: "space-evenly"}}>
+          <LinkedButton href='' alt="First page">First</LinkedButton>
+          <LinkedButton href='' alt="Previous page">← Prev</LinkedButton>
+          <label >Page  1 of {postsData.meta.totalCount / 10}</label>
+          <LinkedButton href='' alt="Nest page">Next →</LinkedButton>
+          <LinkedButton href='' alt="Last page">Last</LinkedButton>
+        </div>
       </section>
     </Layout>
   );
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview, params }): Promise<GetStaticPropsResult<Props>> => {
-  // const {page, limit} = params;
-  // console.log('params', params);
+  
   const data: { posts: PostsPaginated} = await getPostsPaginated();
   return {
     props: {
