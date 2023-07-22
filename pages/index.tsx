@@ -24,17 +24,17 @@ export default function Home({ postsData }: Props): ReactNode {
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <ul className={utilStyles.list}>
           {postsData.data.map((post) =>
-          <li className={utilStyles.listItem} key={post.id} >
-            <PostPreviewItem post={post} key={post.id}/>
-          </li>
+            <li className={utilStyles.listItem} key={post.id} >
+              <PostPreviewItem post={post} key={post.id} />
+            </li>
           )}
         </ul>
-        <div className='pagination' style={{display: "flex", justifyContent: "space-evenly"}}>
-          <LinkedButton href='' alt="First page">First</LinkedButton>
-          <LinkedButton href='' alt="Previous page">← Prev</LinkedButton>
-          <label >Page  1 of {postsData.meta.totalCount / 10}</label>
-          <LinkedButton href='' alt="Nest page">Next →</LinkedButton>
-          <LinkedButton href='' alt="Last page">Last</LinkedButton>
+        <div className='pagination' style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <LinkedButton href="" alt="First page"></LinkedButton>
+          <LinkedButton href="" alt="Previous page"></LinkedButton>
+          <label >Page 1 of {postsData?.meta.totalCount / 10}</label>
+          <LinkedButton href={`/posts/page/${postsData?.links.next?.page || ''}`} alt="Nest page">{postsData?.links.next?.page && "Next →"}</LinkedButton>
+          <LinkedButton href={`/posts/page/${postsData?.links.last?.page || ''}`} alt="Last page">{postsData?.links.last?.page && "Last"}</LinkedButton>
         </div>
       </section>
     </Layout>
@@ -42,8 +42,8 @@ export default function Home({ postsData }: Props): ReactNode {
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview, params }): Promise<GetStaticPropsResult<Props>> => {
-  
-  const data: { posts: PostsPaginated} = await getPostsPaginated();
+
+  const data: { posts: PostsPaginated } = await getPostsPaginated();
   return {
     props: {
       postsData: data.posts,
