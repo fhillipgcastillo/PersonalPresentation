@@ -24,7 +24,6 @@ const NewPost = () => {
 
   useEffect(() => {
     if (data?.createPost) {
-      console.log("postData", data?.createPost);
       setTimeout(() => {
         handleCancel();
       }, 3000);
@@ -32,13 +31,14 @@ const NewPost = () => {
   }, [data])
 
   const handleSubmit = () => {
-    console.log({ postTitle, postBody });
-    addPost({
-      variables: {
-        title: postTitle,
-        body: postBody,
-      }
-    })
+    if (postTitle && postBody) {
+      addPost({
+        variables: {
+          title: postTitle,
+          body: postBody,
+        }
+      });
+    }
   }
 
   const handleCancel = () => {
