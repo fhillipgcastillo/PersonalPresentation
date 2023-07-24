@@ -21,6 +21,9 @@ export default function Home({ postsData }: Props): ReactNode {
       <Head>
         <title>{siteTitle}</title>
       </Head>
+      <section style={{ display: "flex", justifyContent: "flex-end", padding: "10px" }}>
+        <LinkedButton href="/posts/new" alt="New post" style={{ backgroundColor: "#0070f3", color: "white", padding: "10px 20px", alignSelf: "end"}}>New Post</LinkedButton>
+      </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <ul className={utilStyles.list}>
           {postsData.data.map((post) =>
