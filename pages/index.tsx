@@ -13,8 +13,6 @@ interface Props {
   postsData: PostsPaginated;
 }
 
-
-
 export default function Home({ postsData }: Props): ReactNode {
   return (
     <Layout home>
@@ -26,11 +24,14 @@ export default function Home({ postsData }: Props): ReactNode {
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <ul className={utilStyles.list}>
-          {postsData.data.map((post) =>
+          {postsData && postsData.data.map((post) =>
             <li className={utilStyles.listItem} key={post.id} >
               <PostPreviewItem post={post} key={post.id} />
             </li>
           )}
+          {
+            !postsData && <p>Oops Something happend. Please try again.</p>
+          }
         </ul>
         <div className='pagination' style={{ display: "flex", justifyContent: "space-evenly" }}>
           <LinkedButton href="" alt="First page"></LinkedButton>
