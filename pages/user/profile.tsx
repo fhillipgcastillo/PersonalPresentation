@@ -1,15 +1,15 @@
 import React, { ReactElement } from 'react'
 import Image from "next/image"
 
-const Profile = ():ReactElement => {
+const Profile = (): ReactElement => {
   return (
     <div>
-        <Image
+      <Image
         src={"/images/profile.jpg"}
         width={144}
         height={144}
         alt="profile image"
-        />
+      />
     </div>
   )
 }

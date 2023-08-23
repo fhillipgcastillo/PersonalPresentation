@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, cleanup } from '@testing-library/react'
 import { MockedProvider } from "@apollo/client/testing";
 import '@testing-library/jest-dom'
 
@@ -19,6 +19,8 @@ const mocks = [
         result: posts
     }
 ];
+
+afterEach(cleanup);
 
 describe('Home', () => {
     it('renders a heading', async () => {
