@@ -17,5 +17,8 @@ jobs:
         with:
           node-version: 16
 
+      - name: Install requirements
+        run: npm i
+
       - name: Run tests
         run: npm run tests
