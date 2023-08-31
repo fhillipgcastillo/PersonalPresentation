@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Layout, { siteTitle } from '../components/Layout';
 import utilStyles from '../styles/utils.module.css';
 import { getPostsPaginated } from '../lib/posts';
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { GetStaticProps, GetStaticPropsResult } from 'next';
 import { PostPreviewItem } from '../components/PostPreviewItem';
 import { PostsPaginated } from '../lib/graphqlQuery';
@@ -13,33 +13,33 @@ interface Props {
   postsData: PostsPaginated;
 }
 
-export default function Home({ postsData }: Props): ReactNode {
+export default function Home({ postsData }: Props): ReactElement {
   return (
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
       </Head>
       <section style={{ display: "flex", justifyContent: "flex-end", padding: "10px" }}>
-        <LinkedButton href="/posts/new" alt="New post" style={{ backgroundColor: "#0070f3", color: "white", padding: "10px 20px", alignSelf: "end"}}>New Post</LinkedButton>
+        <LinkedButton href="/posts/new" alt="New post" style={{ backgroundColor: "#0070f3", color: "white", padding: "10px 20px", alignSelf: "end" }} test-id="newpostbtn">New Post</LinkedButton>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <ul className={utilStyles.list}>
-          {postsData && postsData.data.map((post) =>
-            <li className={utilStyles.listItem} key={post.id} >
+        <ul className={utilStyles.list} test-id="posts-list">
+          {postsData?.data && postsData.data.map((post) =>
+            <li className={utilStyles.listItem} key={post.id} test-id={`post-preview-${post.id}`}>
               <PostPreviewItem post={post} key={post.id} />
             </li>
           )}
           {
-            !postsData && <p>Oops Something happend. Please try again.</p>
+            !postsData?.data && <p>Oops Something happend. Please try again.</p>
           }
         </ul>
-        <div className='pagination' style={{ display: "flex", justifyContent: "space-evenly" }}>
+        {postsData?.meta && postsData?.links && <div className='pagination' style={{ display: "flex", justifyContent: "space-evenly" }}>
           <LinkedButton href="" alt="First page"></LinkedButton>
           <LinkedButton href="" alt="Previous page"></LinkedButton>
           <label >Page 1 of {postsData?.meta.totalCount / 10}</label>
           <LinkedButton href={`/posts/page/${postsData?.links.next?.page || ''}`} alt="Nest page">{postsData?.links.next?.page && "Next →"}</LinkedButton>
           <LinkedButton href={`/posts/page/${postsData?.links.last?.page || ''}`} alt="Last page">{postsData?.links.last?.page && "Last"}</LinkedButton>
-        </div>
+        </div>}
       </section>
     </Layout>
   );

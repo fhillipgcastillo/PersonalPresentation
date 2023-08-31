@@ -19,7 +19,7 @@ query getPosts {
 
 export interface PostsPaginated {
     data?: {
-        id: number;
+        id: number | string;
         title: string;
         body: string;
         user: {
