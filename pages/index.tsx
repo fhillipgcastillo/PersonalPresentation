@@ -20,7 +20,7 @@ export default function Home({ postsData }: HomeProps): ReactElement {
         <title>{siteTitle}</title>
       </Head>
       <section style={{ display: "flex", justifyContent: "flex-end", padding: "10px" }}>
-        <LinkedButton href="/posts/new" alt="New post" style={{ backgroundColor: "#0070f3", color: "white", padding: "10px 20px", alignSelf: "end" }} test-id="newpostbtn">New Post</LinkedButton>
+        <LinkedButton href="/posts/new" alt="New post" style={{ backgroundColor: "#0070f3", color: "white", padding: "10px 20px", alignSelf: "end" }}>New Post</LinkedButton>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <ul className={utilStyles.list} test-id="posts-list">

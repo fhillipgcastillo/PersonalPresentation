@@ -1,4 +1,4 @@
-import { render, screen, cleanup } from '@testing-library/react'
+import { render, screen, cleanup, fireEvent } from '@testing-library/react'
 import { MockedProvider } from "@apollo/client/testing";
 import { GET_POSTS_PAGINATED_QUERY, PostsPaginated } from '../lib/graphqlQuery';
 import Home, { HomeProps, getStaticProps } from '../pages/index'
@@ -29,10 +29,11 @@ describe('Home', () => {
         expect(heading).toBeInTheDocument();
     })
 
-    it('Should render New Post button and redirect', async () => {
+    it('Should render New Post button', () => {
         render(<Home postsData={{}} />);
-        const newPostBtn = await screen.findByText("New Post");
+        const newPostBtn = screen.getByRole("link", { name: /New Post/i });
         expect(newPostBtn).toBeInTheDocument();
+        expect(newPostBtn)
     })
 
     it('Should render a list of posts', async () => {
