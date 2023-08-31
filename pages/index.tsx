@@ -9,11 +9,11 @@ import { PostsPaginated } from '../lib/graphqlQuery';
 import LinkedButton from '../components/LinkedButton/LinkedButton';
 
 
-interface Props {
+export interface HomeProps {
   postsData: PostsPaginated;
 }
 
-export default function Home({ postsData }: Props): ReactElement {
+export default function Home({ postsData }: HomeProps): ReactElement {
   return (
     <Layout home>
       <Head>
@@ -45,7 +45,7 @@ export default function Home({ postsData }: Props): ReactElement {
   );
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview, params }): Promise<GetStaticPropsResult<Props>> => {
+export const getStaticProps: GetStaticProps<HomeProps> = async ({ preview, params }) => {
 
   const data: { posts: PostsPaginated } = await getPostsPaginated();
   return {
