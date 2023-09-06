@@ -20,28 +20,6 @@
     box-shadow: #6f94e5 0px 0px 10px 3px;
 
 }
-.postPreviewContainer a {
-    color: #535760;
-}
-
-
-.postPreviewContainer a:hover {
-    text-decoration: none;
-}
-.read-more {
-    text-align: center;
-    background-color: #3b455e;
-    padding: 7.5px 15px;
-    color: white;
-    border: none;
-}
-.read-more:hover {
-    background-color: #41568c;
-}
-.read-more > a {
-    color: white;
-    text-decoration: none;
-}
 
 .title {
     margin-top: 0.3em;
