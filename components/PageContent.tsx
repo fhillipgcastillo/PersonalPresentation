@@ -12,9 +12,9 @@ function PageContent({ postsData }) {
     };
     return (
         <Box>
-            <Grid container  rowSpacing={2} zeroMinWidth>
+            <Grid container spacing={3} zeroMinWidth>
                 {postsData.data.map((post) =>
-                    <Grid item xs={12} md={4} key={post.id} >
+                    <Grid container item xs={12} md={4} key={post.id}>
                         <PostPreviewItem post={post} key={post.id} />
                     </Grid>
                 )}
