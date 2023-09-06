@@ -1,16 +1,13 @@
-import Link from "next/link";
-import { PostResponse } from "../../lib/posts";
-import utilStyles from '../../styles/utils.module.css';
 import postsStyles from './PostPreviewItem.module.css';
 import React from "react";
-import LinkedButton from "../LinkedButton/LinkedButton";
+import { Button, Paper } from "@mui/material";
 
 const PostPreviewItem = ({ post }): React.ReactNode => {
     return (
         <div className={postsStyles.postPreviewContainer}>
             <label>{post?.user.name.toUpperCase()}</label>
             <h3 className={postsStyles.title}>{post.title}</h3>
-            <LinkedButton href={`/posts/${post.id}`} style={{backgroundColor: ""}}>READ MORE</LinkedButton>
+            <Button href={`/posts/${post.id}`} variant="contained">READ MORE</Button>
         </div>
     );
 };
