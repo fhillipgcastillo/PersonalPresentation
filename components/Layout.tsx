@@ -4,6 +4,7 @@ import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
 import React from 'react';
+import { Container } from '@mui/material';
 
 const name: string = 'Fhillip Castillo';
 export const siteTitle: string = 'Next.js Sample Website';
@@ -12,7 +13,7 @@ export default function Layout(
   { children, home }: { children: React.ReactNode, home?: boolean }
 ): React.ReactNode {
   return (
-    <div className={styles.container}>
+    <Container>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -67,6 +68,6 @@ export default function Layout(
           <Link href="/">← Back to home</Link>
         </div>
       )}
-    </div>
+    </Container>
   );
 }

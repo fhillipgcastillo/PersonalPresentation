@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styles from './newpost.module.css';
 import Layout from '../../../components/Layout';
 import Head from 'next/head';
-import Button from '../../../components/Button';
+import { Box, Button }  from '@mui/material';
 import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 
@@ -75,10 +75,12 @@ const NewPost = () => {
                 disabled={loading}
               />
             </div>
-            <div className={styles.actionButtons}>
-              <Button onClick={handleSubmit} disabled={loading}>{loading ? 'Loading...' : 'Submit'}</Button>
-              <Button onClick={handleCancel} disabled={loading}>Cancel</Button>
-            </div>
+            <Box  sx={{ '& button': { m: 1,  } }}>
+              <div>
+              <Button variant="contained" onClick={handleSubmit} disabled={loading}>{loading ? 'Loading...' : 'Submit'}</Button>
+              <Button variant="contained" color="error" onClick={handleCancel} disabled={loading}>Cancel</Button>
+              </div>
+            </Box>
           </>
         }
       </div>

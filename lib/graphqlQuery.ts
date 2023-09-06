@@ -17,16 +17,18 @@ query getPosts {
 `;
 
 
+export interface PostData {
+    id: number | string;
+    title: string;
+    body: string;
+    user: {
+        id: number;
+        name: string;
+    }
+}
+
 export interface PostsPaginated {
-    data?: {
-        id: number | string;
-        title: string;
-        body: string;
-        user: {
-            id: number;
-            name: string;
-        }
-    }[];
+    data?: PostData[];
     meta?: {
         totalCount: number;
     };

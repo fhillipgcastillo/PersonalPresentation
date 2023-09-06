@@ -6,7 +6,9 @@ import { ReactNode } from 'react';
 import { GetStaticProps, GetStaticPropsResult } from 'next';
 import { PostPreviewItem } from '../../../components/PostPreviewItem';
 import { PostsPaginated } from '../../../lib/graphqlQuery';
-import LinkedButton from '../../../components/LinkedButton/LinkedButton';
+import { Button, Grid, Pagination, Stack } from '@mui/material';
+import { useRouter } from 'next/router';
+import PageContent from '../../../components/PageContent';
 
 
 interface Props {
@@ -15,30 +17,20 @@ interface Props {
 }
 
 export default function PostsPage({ postsData, page }: Props): ReactNode {
+    const router = useRouter();
+
+    const changePage = (event: React.ChangeEvent, page: number) => {
+        router.push(`/posts/page/${page}`);
+    };
     return (
         <Layout home>
             <Head>
                 <title>{siteTitle}</title>
             </Head>
             <section style={{ display: "flex", justifyContent: "flex-end", padding: "10px" }}>
-                <LinkedButton href="/posts/new" alt="New post" style={{ backgroundColor: "#0070f3", color: "white", padding: "10px 20px", alignSelf: "end" }}>New Post</LinkedButton>
+                <Button href="/posts/new" style={{ backgroundColor: "#0070f3", color: "white", padding: "10px 20px", alignSelf: "end" }}>New Post</Button>
             </section>
-            <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-                <ul className={utilStyles.list}>
-                    {postsData?.data.map((post) =>
-                        <li className={utilStyles.listItem} key={post.id} >
-                            <PostPreviewItem post={post} key={post.id} />
-                        </li>
-                    )}
-                </ul>
-                <div className='pagination' style={{ display: "flex", justifyContent: "space-evenly" }}>
-                    <LinkedButton href={`/posts/page/${postsData?.links.first?.page || ''}`} alt="First page">{postsData?.links.first?.page && 'First'}</LinkedButton>
-                    <LinkedButton href={`/posts/page/${postsData?.links.prev?.page || ''}`} alt="Previous page">{postsData?.links.prev?.page && "← Prev"}</LinkedButton>
-                    <label >Page  {page} of {postsData?.meta.totalCount / 10}</label>
-                    <LinkedButton href={`/posts/page/${postsData?.links.next?.page || ''}`} alt="Nest page">{postsData?.links.next?.page && "Next →"}</LinkedButton>
-                    <LinkedButton href={`/posts/page/${postsData?.links.last?.page || ''}`} alt="Last page">{postsData?.links.last?.page && "Last"}</LinkedButton>
-                </div>
-            </section>
+            <PageContent postsData={postsData} />
         </Layout>
     );
 }
