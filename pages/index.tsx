@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Layout, { siteTitle } from '../components/Layout';
 import utilStyles from '../styles/utils.module.css';
 import { getPostsPaginated } from '../lib/posts';
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { GetStaticProps, GetStaticPropsResult } from 'next';
 import { PostPreviewItem } from '../components/PostPreviewItem';
 import { PostsPaginated } from '../lib/graphqlQuery';
@@ -11,18 +11,11 @@ import { useRouter } from 'next/router';
 import PageContent from '../components/PageContent';
 
 
-interface Props {
+export interface HomeProps {
   postsData: PostsPaginated;
 }
 
-
-
-export default function Home({ postsData }: Props): ReactNode {
-  const router = useRouter();
-
-  const changePage = (event: React.ChangeEvent, page: number) => {
-    router.push(`/posts/page/${page}`);
-  };
+export default function Home({ postsData }: HomeProps): ReactElement {
   return (
     <Layout home>
       <Head>
@@ -36,7 +29,7 @@ export default function Home({ postsData }: Props): ReactNode {
   );
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview, params }): Promise<GetStaticPropsResult<Props>> => {
+export const getStaticProps: GetStaticProps<HomeProps> = async ({ preview, params }) => {
 
   const data: { posts: PostsPaginated } = await getPostsPaginated();
   return {

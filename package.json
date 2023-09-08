@@ -3,7 +3,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "tests:watch": "jest --watch",
+    "tests": "jest"
   },
   "dependencies": {
     "@apollo/client": "^3.7.17",
@@ -44,8 +46,16 @@
   },
   "homepage": "https://github.com/fhillipgcastillo/ReactNextGraphQLTs#readme",
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.0.1",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/jest": "^29.5.4",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
+    "cross-fetch": "^4.0.0",
+    "jest": "^29.6.3",
+    "jest-environment-jsdom": "^29.6.3",
+    "ts-jest": "^29.1.1",
     "typescript": "5.1.6"
   }
 }

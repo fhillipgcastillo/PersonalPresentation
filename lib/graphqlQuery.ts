@@ -17,8 +17,8 @@ query getPosts {
 `;
 
 
-export interface PostData  {
-    id: number;
+export interface PostData {
+    id: number | string;
     title: string;
     body: string;
     user: {
@@ -26,6 +26,7 @@ export interface PostData  {
         name: string;
     }
 }
+
 export interface PostsPaginated {
     data?: PostData[];
     meta?: {
