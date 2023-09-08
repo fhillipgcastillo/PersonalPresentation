@@ -16,11 +16,6 @@ export interface HomeProps {
 }
 
 export default function Home({ postsData }: HomeProps): ReactElement {
-  const router = useRouter();
-
-  const changePage = (event: React.ChangeEvent, page: number) => {
-    router.push(`/posts/page/${page}`);
-  };
   return (
     <Layout home>
       <Head>

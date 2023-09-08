@@ -1,10 +1,11 @@
-import { render, screen, cleanup, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { MockedProvider } from "@apollo/client/testing";
 import { GET_POSTS_PAGINATED_QUERY, PostsPaginated } from '../lib/graphqlQuery';
 import Home, { HomeProps, getStaticProps } from '../pages/index'
 import posts from "./index-post-page.json";
 import '@testing-library/jest-dom'
-
+import * as nextRouter from "next/router";
+import { mockRouter } from "../__mocks__/routers";
 
 const mocks = [
     {
@@ -19,9 +20,13 @@ const mocks = [
     }
 ];
 
+jest.spyOn(nextRouter, 'useRouter').mockReturnValue(mockRouter);
+
 describe('Home', () => {
     it('Should renders a heading', async () => {
-        render(<Home postsData={{}} />);
+        render(
+            <Home postsData={{}} />
+        );
         const heading = screen.getByRole('heading', {
             name: /Fhillip Castillo/i,
         });
@@ -39,13 +44,14 @@ describe('Home', () => {
     it('Should render a list of posts', async () => {
         const staticProps = await getStaticProps({}) as { props: HomeProps };
         expect(staticProps.props).toBeDefined();
-
+        const data = staticProps.props.postsData as unknown as PostsPaginated;
+        expect(typeof data).toBe(typeof []);
         render(
             <MockedProvider mocks={mocks}>
-                <Home postsData={staticProps.props.postsData as unknown as PostsPaginated} />
+                <Home postsData={data} />
             </MockedProvider>
         );
-        const postsList = await screen.findByRole('list', {});
+        const postsList = await screen.getByTestId('page-posts', {});
         expect(postsList.children.length).toBe(posts.data.posts.data.length);
     })
 })
