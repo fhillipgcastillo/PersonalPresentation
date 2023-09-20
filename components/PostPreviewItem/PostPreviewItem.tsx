@@ -14,18 +14,18 @@ const PostPreviewItem = ({ post }: { post: PostData }): React.ReactNode => {
             }
         }}>
             <CardHeader
-       
-                title={<Typography variant="h5" noWrap>{post.title.length > 30 ? `${post.title.slice(0, 27)}...`: post.title}</Typography>}
+
+                title={<Typography variant="h5" noWrap>{post.title.length > 30 ? `${post.title.slice(0, 27)}...` : post.title}</Typography>}
                 subheader={post?.user.name.toUpperCase()}
-                
+
             />
             <CardContent >
                 <Typography variant="body2" color="text.secondary" noWrap>
                     {post.body}
                 </Typography>
             </CardContent>
-            <CardActions>
-                <Grid justifyContent={"center"}>
+            <CardActions sx={{ justifyContent: "center" }}>
+                <Grid >
                     <Button href={`/posts/${post.id}`} variant="contained">READ MORE</Button>
                 </Grid>
             </CardActions>
