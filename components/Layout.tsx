@@ -4,13 +4,19 @@ import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
 import React from 'react';
-import { Container } from '@mui/material';
+import { Container, Grid, Typography } from '@mui/material';
 
-const name: string = 'Fhillip Castillo';
-export const siteTitle: string = 'Next.js Sample Website';
+const name: string = 'Fhillip Castillo\'s Blog Demo';
+
+export interface LayoutProps {
+  children: React.ReactNode;
+  siteTitle?: string;
+  home?: boolean;
+  page?: number;
+};
 
 export default function Layout(
-  { children, home }: { children: React.ReactNode, home?: boolean }
+  { children, home, siteTitle, page }: LayoutProps
 ): React.ReactNode {
   return (
     <Container>
@@ -18,7 +24,7 @@ export default function Layout(
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="description"
-          content="Learn how to build a personal website using Next.js"
+          content={`${siteTitle} | ${name} ${page ? "Page " + page.toString() : ""}`}
         />
         <meta
           property="og:image"
@@ -40,7 +46,13 @@ export default function Layout(
               width={144}
               alt=""
             />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
+            <Typography variant='h1' sx={{
+              fontSize: "3.6rem",
+              lineHeight: 1.2,
+              fontWeight: 800,
+              letterSpacing: "-0.05rem",
+              margin: "1rem 0",
+            }}>{name}</Typography>
           </>
         ) : (
           <>
@@ -54,15 +66,21 @@ export default function Layout(
                 alt=""
               />
             </Link>
-            <h2 className={utilStyles.headingLg}>
+            <Typography variant="h2" sx={{
+              fontSize: "1.5rem",
+              lineHeight: 1.2,
+              fontWeight: 800,
+              letterSpacing: "-0.05rem",
+              margin: "1rem 0",
+            }}>
               <Link href="/" className={utilStyles.colorInherit}>
                 {name}
               </Link>
-            </h2>
+            </Typography>
           </>
         )}
       </header>
-      <main>{children}</main>
+      <Grid container spacing={2}>{children}</Grid>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">← Back to home</Link>
