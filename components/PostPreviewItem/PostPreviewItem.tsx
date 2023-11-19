@@ -1,33 +1,38 @@
 import React from "react";
-import { Button, Card, CardActions, CardContent, CardHeader, Grid, Paper, Typography } from "@mui/material";
+import { Button, Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Grid, Paper, Typography } from "@mui/material";
 import { PostData } from '../../lib/graphqlQuery';
-// box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+
 
 const PostPreviewItem = ({ post }: { post: PostData }): React.ReactNode => {
     return (
-        <Card sx={{
-            // height: "30vh",
-            whiteSpace: "nowrap",
-            boxShadow: "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
-            "&:hover": {
-                boxShadow: "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)",
-            }
-        }}>
-            <CardHeader
+        <Card
+            sx={{
+                height: '100%', display: 'flex', flexDirection: 'column', //whiteSpace: "nowrap",
+                boxShadow: "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+                "&:hover": {
+                    boxShadow: "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)",
+                }
+            }}
 
-                title={<Typography variant="h5" noWrap>{post.title.length > 30 ? `${post.title.slice(0, 27)}...` : post.title}</Typography>}
-                subheader={post?.user.name.toUpperCase()}
-
+        >
+            <CardMedia
+                component="div"
+                sx={{
+                    // 16:9
+                    pt: '56.25%',
+                }}
+                image="https://source.unsplash.com/random?wallpapers"
             />
-            <CardContent >
-                <Typography variant="body2" color="text.secondary" noWrap>
-                    {post.body}
+            <CardContent sx={{ flexGrow: 1 }}>
+                <Typography gutterBottom variant="h5" component="h2" noWrap>
+                    {post.title.length > 30 ? `${post.title.slice(0, 27)}...` : post.title}
+                </Typography>
+                <Typography>
+                    {post.body.length > 80 ? `${post.body.slice(0, 77)}...` : post.body}
                 </Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: "center" }}>
-                <Grid >
-                    <Button href={`/posts/${post.id}`} variant="contained">READ MORE</Button>
-                </Grid>
+                <Button href={`/posts/${post.id}`} variant="contained">READ MORE</Button>
             </CardActions>
         </Card>
     );
