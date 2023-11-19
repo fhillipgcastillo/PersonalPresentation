@@ -13,7 +13,7 @@ const mocks = [
             query: GET_POSTS_PAGINATED_QUERY,
             variables: {
                 page: 1,
-                limit: 10
+                limit: 9
             }
         },
         result: posts
