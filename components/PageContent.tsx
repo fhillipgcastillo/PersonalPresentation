@@ -32,6 +32,7 @@ function PageContent({ postsData }) {
                     onChange={changePage}
                     showFirstButton
                     showLastButton
+                    color='primary'
                 />
             </Stack>
         </Box>

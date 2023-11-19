@@ -1,9 +1,13 @@
 import React from "react";
 import { Button, Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Grid, Paper, Typography } from "@mui/material";
 import { PostData } from '../../lib/graphqlQuery';
+import { capitalize } from "../../lib/utils";
 
 
 const PostPreviewItem = ({ post }: { post: PostData }): React.ReactNode => {
+    const postTitle = capitalize(post.title);
+    const postBody = capitalize(post.body);
+
     return (
         <Card
             sx={{
@@ -25,10 +29,10 @@ const PostPreviewItem = ({ post }: { post: PostData }): React.ReactNode => {
             />
             <CardContent sx={{ flexGrow: 1 }}>
                 <Typography gutterBottom variant="h5" component="h2" noWrap>
-                    {post.title.length > 30 ? `${post.title.slice(0, 27)}...` : post.title}
+                    {postTitle.length > 30 ? `${postTitle.slice(0, 27)}...` : postTitle}
                 </Typography>
                 <Typography>
-                    {post.body.length > 80 ? `${post.body.slice(0, 77)}...` : post.body}
+                    {postBody.length > 80 ? `${postBody.slice(0, 77)}...` : postBody}
                 </Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: "center" }}>
