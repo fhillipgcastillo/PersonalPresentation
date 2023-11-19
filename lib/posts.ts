@@ -23,7 +23,7 @@ export const getAllPosts = async () => {
   return data.posts.data;
 };
 
-export const getPostsPaginated = async (page: number = 1, limit: number = 10) => {
+export const getPostsPaginated = async (page: number = 1, limit: number = 9) => {
   const { data } = await client.query(
     {
       query: GET_POSTS_PAGINATED_QUERY,
