@@ -6,17 +6,18 @@ import Link from 'next/link';
 import React from 'react';
 import { Container, Grid, Typography } from '@mui/material';
 
-const name: string = 'Fhillip Castillo\'s Blog Demo';
+export const SITE_NAME: string = 'Fhillip Castillo\'s Blog Demo';
 
 export interface LayoutProps {
   children: React.ReactNode;
   siteTitle?: string;
+  description?: string;
   home?: boolean;
   page?: number;
 };
 
 export default function Layout(
-  { children, home, siteTitle, page }: LayoutProps
+  { children, home, siteTitle, description, page }: LayoutProps
 ): React.ReactNode {
   return (
     <Container>
@@ -24,15 +25,16 @@ export default function Layout(
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="description"
-          content={`${siteTitle} | ${name} ${page ? "Page " + page.toString() : ""}`}
+          content={`${description?.length >= 155 ? description?.slice(0, 154) : description}`}
         />
+        <meta name="robots" content="index, follow" />
         <meta
           property="og:image"
           content={`https://og-image.vercel.app/${encodeURI(
             siteTitle,
           )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
         />
-        <meta name="og:title" content={siteTitle} />
+        <meta name="og:title" content={`${siteTitle} | ${SITE_NAME}`} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <header className={styles.header}>
@@ -52,7 +54,7 @@ export default function Layout(
               fontWeight: 800,
               letterSpacing: "-0.05rem",
               margin: "1rem 0",
-            }}>{name}</Typography>
+            }}>{SITE_NAME}</Typography>
           </>
         ) : (
           <>
@@ -74,7 +76,7 @@ export default function Layout(
               margin: "1rem 0",
             }}>
               <Link href="/" className={utilStyles.colorInherit}>
-                {name}
+                {SITE_NAME}
               </Link>
             </Typography>
           </>

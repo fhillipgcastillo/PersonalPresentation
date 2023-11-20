@@ -2,7 +2,7 @@ import React from 'react'
 import Layout from './Layout'
 import { Button, Grid, Typography } from '@mui/material'
 import PostPreview from './PostPreview'
-import { PostsPaginated } from '../lib/graphqlQuery'
+import { PostsPaginated } from '../lib/dataTypes'
 
 export interface HomeLayoutProps {
     postsData: PostsPaginated;

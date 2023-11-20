@@ -1,7 +1,7 @@
 import { getPostsPaginated } from '../lib/posts';
 import { ReactElement } from 'react';
 import { GetStaticProps } from 'next';
-import { PostsPaginated } from '../lib/graphqlQuery';
+import { PostsPaginated } from '../lib/dataTypes';
 import HomeLayout, { HomeLayoutProps } from '../components/HomeLayout';
 
 

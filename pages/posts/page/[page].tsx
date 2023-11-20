@@ -1,6 +1,6 @@
 import { getPostPaginatedIdsPaths, getPostsPaginated } from '../../../lib/posts';
 import { GetStaticProps, GetStaticPropsResult } from 'next';
-import { PostsPaginated } from '../../../lib/graphqlQuery';
+import { PostsPaginated } from '../../../lib/dataTypes';
 import HomeLayout from '../../../components/HomeLayout';
 
 

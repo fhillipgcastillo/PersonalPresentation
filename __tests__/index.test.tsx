@@ -1,11 +1,13 @@
 import { render, screen } from '@testing-library/react'
 import { MockedProvider } from "@apollo/client/testing";
-import { GET_POSTS_PAGINATED_QUERY, PostsPaginated } from '../lib/graphqlQuery';
-import Home, { HomeProps, getStaticProps } from '../pages/index'
+import { GET_POSTS_PAGINATED_QUERY } from '../lib/graphqlQuery';
+import { PostsPaginated } from '../lib/dataTypes';
+import Home, { getStaticProps } from '../pages/index'
 import posts from "./index-post-page.json";
 import '@testing-library/jest-dom'
 import * as nextRouter from "next/router";
 import { mockRouter } from "../__mocks__/routers";
+import { HomeLayoutProps } from '../components/HomeLayout';
 
 const mocks = [
     {
@@ -42,7 +44,7 @@ describe('Home', () => {
     })
 
     it('Should render a list of posts', async () => {
-        const staticProps = await getStaticProps({}) as { props: HomeProps };
+        const staticProps = await getStaticProps({}) as { props: HomeLayoutProps };
         expect(staticProps.props).toBeDefined();
         const data = staticProps.props.postsData as unknown as PostsPaginated;
         expect(typeof data).toBe(typeof []);
