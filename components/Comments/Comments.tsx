@@ -10,7 +10,7 @@ interface CommentsProps {
 };
 
 export const Comments = ({ comments }: CommentsProps) => (
-    <Stack spacing={3}>
+    <Stack spacing={3} mt="20px" p={2}>
         {comments?.data.map((comment) => (
             <CommentItem key={comment.id} comment={comment} />
         ))}
