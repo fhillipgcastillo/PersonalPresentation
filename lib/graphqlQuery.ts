@@ -16,42 +16,6 @@ query getPosts {
  }
 `;
 
-
-export interface PostData {
-    id: number | string;
-    title: string;
-    body: string;
-    user: {
-        id: number;
-        name: string;
-    }
-}
-
-export interface PostsPaginated {
-    data?: PostData[];
-    meta?: {
-        totalCount: number;
-    };
-    links?: {
-        first: {
-            page: number;
-            limit: number;
-        };
-        prev?: {
-            page: number;
-            limit: number;
-        };
-        next?: {
-            page: number;
-            limit: number;
-        };
-        last: {
-            page: number;
-            limit: number;
-        }
-    }
-};
-
 export const GET_POSTS_PAGINATED_QUERY = gql`
     query getPaginatedPosts($page: Int, $limit: Int){
         posts(options:{paginate:{ page: $page, limit: $limit }}) {

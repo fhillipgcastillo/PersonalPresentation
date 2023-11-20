@@ -4,7 +4,7 @@ import { Alert, Box, Grid, Pagination, Stack } from '@mui/material'
 import { PostPreviewItem } from './PostPreviewItem'
 import { useRouter } from 'next/router';
 
-function PageContent({ postsData }) {
+function PostPreview({ postsData }) {
     const router = useRouter();
 
     const changePage = (event: React.ChangeEvent, page: number) => {
@@ -39,4 +39,4 @@ function PageContent({ postsData }) {
     )
 }
 
-export default PageContent
+export default PostPreview

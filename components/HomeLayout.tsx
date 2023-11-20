@@ -1,8 +1,8 @@
 import React from 'react'
 import Layout from './Layout'
 import { Button, Grid, Typography } from '@mui/material'
-import PageContent from './PageContent'
-import { PostsPaginated } from '../lib/graphqlQuery'
+import PostPreview from './PostPreview'
+import { PostsPaginated } from '../lib/dataTypes'
 
 export interface HomeLayoutProps {
     postsData: PostsPaginated;
@@ -32,7 +32,7 @@ const HomeLayout = (props: HomeLayoutProps) => {
                 </Grid>
             </Grid>
             <Grid item container flexDirection="column" sx={{ padding: "10px" }}>
-                <PageContent postsData={postsData} />
+                <PostPreview postsData={postsData} />
             </Grid>
         </Layout>
     )
