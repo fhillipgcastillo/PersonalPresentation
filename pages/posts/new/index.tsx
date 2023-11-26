@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react"
-import styles from "./newpost.module.css";
 import Layout from "../../../components/Layout";
 import Head from "next/head";
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { ADD_POST_MUTATION } from "../../../lib/graphQL/mutations";
