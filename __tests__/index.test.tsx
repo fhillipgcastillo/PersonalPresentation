@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { MockedProvider } from "@apollo/client/testing";
-import { GET_POSTS_PAGINATED_QUERY } from '../lib/graphqlQueries';
+import { GET_POSTS_PAGINATED_QUERY } from '../lib/graphQL/queries';
 import { PostsPaginated } from '../lib/dataTypes';
 import Home, { getStaticProps } from '../pages/index'
 import posts from "./index-post-page.json";

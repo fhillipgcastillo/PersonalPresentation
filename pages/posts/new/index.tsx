@@ -2,18 +2,10 @@ import React, { useEffect, useState } from 'react'
 import styles from './newpost.module.css';
 import Layout from '../../../components/Layout';
 import Head from 'next/head';
-import { Box, Button }  from '@mui/material';
-import { gql, useMutation } from '@apollo/client';
+import { Box, Button } from '@mui/material';
+import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
-
-const ADD_POST_MUTATION = gql`
-mutation addPost($title: String!, $body: String!) {
-  createPost(input: { title: $title, body: $body}) {
-    title
-    body
-  }
-}
-`;
+import { ADD_POST_MUTATION } from '../../../lib/graphQL/mutations';
 
 const NewPost = () => {
   const [postTitle, setPostTitle] = useState<string>("");
@@ -75,10 +67,10 @@ const NewPost = () => {
                 disabled={loading}
               />
             </div>
-            <Box  sx={{ '& button': { m: 1,  } }}>
+            <Box sx={{ '& button': { m: 1, } }}>
               <div>
-              <Button variant="contained" onClick={handleSubmit} disabled={loading}>{loading ? 'Loading...' : 'Submit'}</Button>
-              <Button variant="contained" color="error" onClick={handleCancel} disabled={loading}>Cancel</Button>
+                <Button variant="contained" onClick={handleSubmit} disabled={loading}>{loading ? 'Loading...' : 'Submit'}</Button>
+                <Button variant="contained" color="error" onClick={handleCancel} disabled={loading}>Cancel</Button>
               </div>
             </Box>
           </>
