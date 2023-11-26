@@ -1,5 +1,5 @@
 import { client } from './apolloClient';
-import { GET_ALL_POSTS_QUERY, GET_POSTS_PAGINATED_PATHS_QUERY, GET_POSTS_PAGINATED_QUERY, GET_POST_BY_ID_QUERY, GET_POST_FULL_QUERY, GET_POST_IDS_QUERY } from './graphqlQuery';
+import { GET_ALL_POSTS_QUERY, GET_POSTS_PAGINATED_PATHS_QUERY, GET_POSTS_PAGINATED_QUERY, GET_POST_BY_ID_QUERY, GET_POST_FULL_QUERY, GET_POST_IDS_QUERY } from './graphqlQueries';
 
 export interface PostResponse {
   userId: number;
