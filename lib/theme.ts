@@ -19,6 +19,17 @@ export const themeOptions: ThemeOptions = {
             default: 'rgba(255,255,255,0.95)',
         },
     },
+    typography: {
+        h1: {
+            fontSize: "3.7rem"
+        },
+        h2: {
+            fontSize: "2.9rem"
+        },
+        h3: {
+            fontSize: "2.1rem"
+        }
+    },
     components: {
         MuiButton: {
             styleOverrides: {

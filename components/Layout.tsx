@@ -82,7 +82,9 @@ export default function Layout(
           </>
         )}
       </header>
-      <Grid container spacing={2}>{children}</Grid>
+      <Container maxWidth="lg">
+        {children}
+      </Container>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">← Back to home</Link>

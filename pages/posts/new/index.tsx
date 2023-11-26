@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import styles from './newpost.module.css';
-import Layout from '../../../components/Layout';
-import Head from 'next/head';
-import { Box, Button } from '@mui/material';
-import { useMutation } from '@apollo/client';
-import { useRouter } from 'next/router';
-import { ADD_POST_MUTATION } from '../../../lib/graphQL/mutations';
+import React, { useEffect, useState } from "react"
+import styles from "./newpost.module.css";
+import Layout from "../../../components/Layout";
+import Head from "next/head";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
+import { ADD_POST_MUTATION } from "../../../lib/graphQL/mutations";
 
 const NewPost = () => {
   const [postTitle, setPostTitle] = useState<string>("");
@@ -42,40 +42,44 @@ const NewPost = () => {
       <Head>
         <title>New Post</title>
       </Head>
-      <div className={styles.newpostContainer}>
-        <h2>New Post</h2>
-        {data &&
-          <h3>Post created, redirecting...</h3>
-          ||
-          <>
-            <div className={styles.formContainer}>
-              <input
-                className={styles.titleInput}
-                type="text"
-                placeholder="Title"
-                value={postTitle}
-                onChange={(e) => setPostTitle(e.target.value)}
-                disabled={loading}
-              />
-              <textarea
-                className={styles.body}
-                placeholder="Body"
-                cols={10}
-                rows={10}
-                value={postBody}
-                onChange={(e) => setPostBody(e.target.value)}
-                disabled={loading}
-              />
-            </div>
-            <Box sx={{ '& button': { m: 1, } }}>
-              <div>
-                <Button variant="contained" onClick={handleSubmit} disabled={loading}>{loading ? 'Loading...' : 'Submit'}</Button>
+      <Grid container flexDirection="column" alignItems="center">
+        <Grid container item flexDirection="column" lg={8}>
+          <Typography variant="h1" sx={{ fontSize: "2.6rem" }}>Create a new post</Typography>
+          {data &&
+            <Typography variant="h3">Post created, redirecting...</Typography>
+            ||
+            <Grid container item flexDirection="column" spacing={2}>
+              <Grid item container flexDirection="column" >
+                <TextField
+                  variant="outlined"
+                  label="Post Title"
+                  type="text"
+                  onChange={(e) => setPostTitle(e.target.value)}
+                  value={postTitle}
+                  required
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  multiline
+                  variant="outlined"
+                  rows={10}
+                  placeholder="Body"
+                  value={postBody}
+                  onChange={(e) => setPostBody(e.target.value)}
+                  disabled={loading}
+                  fullWidth
+                  margin="normal"
+                />
+              </Grid>
+              <Grid item sx={{ "& button": { m: 1, } }}>
+                <Button variant="contained" onClick={handleSubmit} disabled={loading}>{loading ? "Loading..." : "Submit"}</Button>
                 <Button variant="contained" color="error" onClick={handleCancel} disabled={loading}>Cancel</Button>
-              </div>
-            </Box>
-          </>
-        }
-      </div>
+              </Grid>
+            </Grid>
+          }
+        </Grid>
+      </Grid>
     </Layout>
   )
 }
