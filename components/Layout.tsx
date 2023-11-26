@@ -4,7 +4,7 @@ import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
 import React from 'react';
-import { Container, Grid, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 
 export const SITE_NAME: string = 'Fhillip Castillo\'s Blog Demo';
 
@@ -82,7 +82,9 @@ export default function Layout(
           </>
         )}
       </header>
-      <Grid container spacing={2}>{children}</Grid>
+      <Container maxWidth="lg">
+        {children}
+      </Container>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">← Back to home</Link>
