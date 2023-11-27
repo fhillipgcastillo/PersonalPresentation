@@ -4,7 +4,7 @@ import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
 import React from 'react';
-import { Container, Typography } from '@mui/material';
+import { AppBar, Box, Button, Container, Grid, Toolbar, Typography } from '@mui/material';
 
 export const SITE_NAME: string = 'Fhillip Castillo\'s Blog Demo';
 
@@ -15,7 +15,7 @@ export interface LayoutProps {
   home?: boolean;
   page?: number;
 };
-
+const navItems = ['Home', 'About', 'Contact'];
 export default function Layout(
   { children, home, siteTitle, description, page }: LayoutProps
 ): React.ReactNode {
@@ -37,7 +37,25 @@ export default function Layout(
         <meta name="og:title" content={`${siteTitle} | ${SITE_NAME}`} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header className={styles.header}>
+      <AppBar component="nav">
+        <Toolbar>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          >
+            FC
+          </Typography>
+          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+            {navItems.map((item) => (
+              <Button key={item} sx={{ color: '#fff' }}>
+                {item}
+              </Button>
+            ))}
+          </Box>
+        </Toolbar>
+      </AppBar>
+      {/* <header className={styles.header}>
         {home ? (
           <>
             <Image
@@ -81,7 +99,7 @@ export default function Layout(
             </Typography>
           </>
         )}
-      </header>
+      </header> */}
       <Container maxWidth="lg">
         {children}
       </Container>
