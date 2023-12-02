@@ -1,7 +1,7 @@
 import { getPostPaginatedIdsPaths, getPostsPaginated } from '../../../lib/posts';
 import { GetStaticProps, GetStaticPropsResult } from 'next';
 import { PostsPaginated } from '../../../lib/dataTypes';
-import HomeLayout from '../../../components/HomeLayout';
+import Posts from '../../../components/Posts';
 
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
     page?: number;
 }
 
-export default HomeLayout;
+export default Posts;
 
 export const getStaticProps: GetStaticProps = async ({ preview, params }): Promise<GetStaticPropsResult<Props>> => {
     const page = params?.page ? Number(params?.page) : 1;

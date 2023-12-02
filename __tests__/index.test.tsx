@@ -2,12 +2,12 @@ import { render, screen } from '@testing-library/react'
 import { MockedProvider } from "@apollo/client/testing";
 import { GET_POSTS_PAGINATED_QUERY } from '../lib/graphQL/queries';
 import { PostsPaginated } from '../lib/dataTypes';
-import Home, { getStaticProps } from '../pages/index'
+import Home, { getStaticProps } from '../pages/posts/index'
 import posts from "./index-post-page.json";
 import '@testing-library/jest-dom'
 import * as nextRouter from "next/router";
 import { mockRouter } from "../__mocks__/routers";
-import { HomeLayoutProps } from '../components/HomeLayout';
+import { HomeLayoutProps } from '../components/Posts';
 
 const mocks = [
     {

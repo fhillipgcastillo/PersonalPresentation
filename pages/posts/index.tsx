@@ -2,10 +2,10 @@ import { getPostsPaginated } from '../../lib/posts';
 import { ReactElement } from 'react';
 import { GetStaticProps } from 'next';
 import { PostsPaginated } from '../../lib/dataTypes';
-import HomeLayout, { HomeLayoutProps } from '../../components/HomeLayout';
+import Posts, { HomeLayoutProps } from '../../components/Posts';
 
 
-export default HomeLayout;
+export default Posts;
 
 export const getStaticProps: GetStaticProps<HomeLayoutProps> = async ({ preview, params }) => {
 
