@@ -1,5 +1,6 @@
 import { createTheme } from "@mui/material";
-import { ThemeOptions } from '@mui/material/styles';
+import { PaletteOptions, ThemeOptions } from '@mui/material/styles';
+
 
 export const themeOptions: ThemeOptions = {
     palette: {
@@ -8,12 +9,11 @@ export const themeOptions: ThemeOptions = {
             main: '#00bfa6',
         },
         secondary: {
-            main: '#f50057',
+            main: '#f5ce00',
         },
         text: {
             primary: '#263238',
-            secondary: 'rgba(38,50,56,0.6)',
-            disabled: 'rgba(38,50,56,0.38)',
+            secondary: '#fff',
         },
         background: {
             default: 'rgba(255,255,255,0.95)',
@@ -30,17 +30,9 @@ export const themeOptions: ThemeOptions = {
             fontSize: "2.1rem"
         }
     },
-    components: {
-        MuiButton: {
-            styleOverrides: {
-                containedPrimary: {
-                    color: "#fff"
-                }
-            }
-        }
-    }
 
 };
 
-const theme = createTheme(themeOptions);
-export default theme;
+const homeTheme = createTheme(themeOptions);
+
+export default homeTheme;

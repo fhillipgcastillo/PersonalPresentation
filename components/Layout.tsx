@@ -1,26 +1,41 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import styles from './layout.module.css';
-import utilStyles from '../styles/utils.module.css';
-import Link from 'next/link';
 import React from 'react';
-import { AppBar, Box, Button, Container, Grid, Toolbar, Typography } from '@mui/material';
-
+import { Fab, Grid, Toolbar } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
+import NavBar, { PageNavItems } from './NavBar';
+import { animateScroll as scroll } from "react-scroll";
 export const SITE_NAME: string = 'Fhillip Castillo\'s Blog Demo';
+
 
 export interface LayoutProps {
   children: React.ReactNode;
   siteTitle?: string;
   description?: string;
+  pageNavItems?: PageNavItems[];
   home?: boolean;
   page?: number;
 };
-const navItems = ['Home', 'About', 'Contact'];
+
+
 export default function Layout(
-  { children, home, siteTitle, description, page }: LayoutProps
+  { children, home, siteTitle, description, page, pageNavItems = [] }: LayoutProps
 ): React.ReactNode {
+  const pages = [
+    {
+      title: "Posts",
+      link: "/posts",
+    }
+  ];
+  const navBarItems: PageNavItems[] = [
+    ...pageNavItems,
+    ...pages,
+  ];
+  console.log(pageNavItems && [...pageNavItems]);
   return (
-    <Container>
+    <Grid sx={(theme) => ({
+      height: "100vh"
+    })}>
+      <CssBaseline />
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -37,77 +52,22 @@ export default function Layout(
         <meta name="og:title" content={`${siteTitle} | ${SITE_NAME}`} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <AppBar component="nav">
-        <Toolbar>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-            FC
-          </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
-              </Button>
-            ))}
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {/* <header className={styles.header}>
-        {home ? (
-          <>
-            <Image
-              priority
-              src="/images/profile.jpg"
-              className={utilStyles.borderCircle}
-              height={144}
-              width={144}
-              alt=""
-            />
-            <Typography variant='h1' sx={{
-              fontSize: "3.6rem",
-              lineHeight: 1.2,
-              fontWeight: 800,
-              letterSpacing: "-0.05rem",
-              margin: "1rem 0",
-            }}>{SITE_NAME}</Typography>
-          </>
-        ) : (
-          <>
-            <Link href="/">
-              <Image
-                priority
-                src="/images/profile.jpg"
-                className={utilStyles.borderCircle}
-                height={108}
-                width={108}
-                alt=""
-              />
-            </Link>
-            <Typography variant="h2" sx={{
-              fontSize: "1.5rem",
-              lineHeight: 1.2,
-              fontWeight: 800,
-              letterSpacing: "-0.05rem",
-              margin: "1rem 0",
-            }}>
-              <Link href="/" className={utilStyles.colorInherit}>
-                {SITE_NAME}
-              </Link>
-            </Typography>
-          </>
-        )}
-      </header> */}
-      <Container maxWidth="lg">
+      <NavBar
+        pageNavItems={navBarItems}
+      />
+      <Grid>
+        <Toolbar />
         {children}
-      </Container>
-      {!home && (
-        <div className={styles.backToHome}>
-          <Link href="/">← Back to home</Link>
-        </div>
-      )}
-    </Container>
+      </Grid>
+
+      <Fab
+        variant="extended"
+        color="primary"
+        onClick={() => scroll.scrollToTop()}
+        sx={{ position: "fixed", right: 16, bottom: 16, color: "#fff" }}
+      >
+        ↑
+      </Fab>
+    </Grid>
   );
 }

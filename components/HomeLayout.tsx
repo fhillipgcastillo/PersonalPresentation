@@ -15,7 +15,7 @@ const HomeLayout = (props: HomeLayoutProps) => {
 
     return (
         <Layout home siteTitle={siteTitle} page={page} >
-            <Grid container flexDirection="column" sx={{ padding: "10px" }}>
+            <Grid container item flexDirection="column" sx={{ padding: "10px" }}>
                 <Typography variant='h1' sx={{ fontSize: "2.6rem" }}>Recent Articles</Typography>
                 <Grid item container sx={{ flexGrow: 1 }}>
                     <Grid item xs={8}>
