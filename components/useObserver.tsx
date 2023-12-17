@@ -16,7 +16,6 @@ export const useObserver = (): [visible: boolean, componentRef: MutableRefObject
             const [entry] = entries;
 
             if (entry.isIntersecting && !visible) {
-                console.log("intercepting", entry);
                 setVisible(true);
             } else if (!entry.isIntersecting && visible) {
                 setVisible(false);
