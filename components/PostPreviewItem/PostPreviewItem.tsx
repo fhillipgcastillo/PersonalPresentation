@@ -11,8 +11,7 @@ interface PreviewItemsProps extends GridProps {
 
 const PostPreviewItem = (props: PreviewItemsProps): React.ReactNode => {
     const { post, ...rest } = props;
-    const componentRef = useRef(null);
-    const visible = useObserver({ ref: componentRef });
+    const [visible, componentRef] = useObserver();
 
     const postTitle = capitalize(post.title);
     const postBody = capitalize(post.body);
@@ -21,13 +20,13 @@ const PostPreviewItem = (props: PreviewItemsProps): React.ReactNode => {
         <Grid ref={componentRef} {...rest}>
             <Grow in={visible} timeout={600}>
                 <Card
-                    sx={{
-                        height: '100%', display: 'flex', flexDirection: 'column', //whiteSpace: "nowrap",
-                        boxShadow: "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+                    sx={(theme) => ({
+                        height: '100%', display: 'flex', flexDirection: 'column',
+                        boxShadow: theme.shadows[3],
                         "&:hover": {
-                            boxShadow: "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)",
+                            boxShadow: theme.shadows[5]
                         }
-                    }}
+                    })}
 
                 >
                     <CardMedia

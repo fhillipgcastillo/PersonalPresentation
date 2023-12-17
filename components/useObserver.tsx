@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 /**
  * @description: Tells if the component is observable by the user
- * @param object <{ref : componentRef}>
- * @returns visible
  */
-export const useObserver = ({ ref }) => {
+export const useObserver = (): [visible: boolean, componentRef: MutableRefObject<any>] => {
     const [visible, setVisible] = useState(false);
+    const componentRef = useRef(null);
 
     useEffect(() => {
         const options = {
@@ -24,14 +23,14 @@ export const useObserver = ({ ref }) => {
             }
         };
 
-        if (ref.current) {
+        if (componentRef.current) {
             const observer = new IntersectionObserver(observerCallback, options);
-            observer.observe(ref.current);
+            observer.observe(componentRef.current);
             return () => {
-                if (ref.current) observer.unobserve(ref.current);
+                if (componentRef.current) observer.unobserve(componentRef.current);
             };
         }
-    }, [visible, ref]);
+    }, [visible, componentRef]);
 
-    return visible;
+    return [visible, componentRef];
 };
