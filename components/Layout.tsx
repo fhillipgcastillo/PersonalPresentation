@@ -4,7 +4,7 @@ import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
 import React from 'react';
-import { Container, Typography } from '@mui/material';
+import { Container, CssBaseline, Grid, Typography } from '@mui/material';
 
 export const SITE_NAME: string = 'Fhillip Castillo\'s Blog Demo';
 
@@ -20,7 +20,12 @@ export default function Layout(
   { children, home, siteTitle, description, page }: LayoutProps
 ): React.ReactNode {
   return (
-    <Container>
+    <Grid sx={(theme) => ({
+      height: "100vh"
+      // backgroundColor: home ? theme.palette.secondary.dark : theme.palette.primary.main,
+      // color: home ? theme.palette.secondary.main : theme.palette.text.primary,
+    })}>
+      <CssBaseline />
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -90,6 +95,6 @@ export default function Layout(
           <Link href="/">← Back to home</Link>
         </div>
       )}
-    </Container>
+    </Grid>
   );
 }

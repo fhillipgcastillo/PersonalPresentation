@@ -21,9 +21,14 @@ function PostPreview({ postsData }) {
         <Box>
             <Grid container spacing={3} data-testid="page-posts">
                 {postsData?.data.map((post) =>
-                    <Grid container item xs={12} md={4} key={post.id}>
-                        <PostPreviewItem post={post} key={post.id} />
-                    </Grid>
+                    <PostPreviewItem
+                        post={post}
+                        key={post.id}
+                        container
+                        item
+                        xs={12}
+                        md={4}
+                    />
                 )}
             </Grid>
             <Stack spacing={2} alignItems="center" mb={2} mt={4}>
